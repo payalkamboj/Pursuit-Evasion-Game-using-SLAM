@@ -1,0 +1,10 @@
+In this project, we have used SLAM using the gmapping package in ROS to create maps of the simulated world and use these maps for navigation tasks as well as to avoid obstacles during navigation. These methods can also be used to map real-world environments. After creating a map that can assist navigation for both pursuer and evader, we move to the actual task of pursuit-evasion. Turtlebot3 acts as a Pursuer and the human model as an Evader. We will create a node for tracking the evader and then use the bounding box, localization information to send goals to the pursuer to track the evader.
+
+Task 1: SLAM with GMapping in ROS
+Task 2: Autonomous Navigation: Once you have a map of the environment, it is easy to navigate in the known environment using the "move_base" package, which is a part of the ROS navigation stack.
+Task 3: Tracking Node: For this task, we provide a launch file that loads the Turtlebot3 and a human model equipped with a camera and LIDAR sensor that can utilize the map that was created in Task (1). Once you start the launch file, the map is loaded. Each model uses a different namespace to avoid the ambiguity in the topics they publish and subscribe to. For the pursuing turtlebot, it’s namespace will be tb3_0 and the evading human model will have the namespace tb3_1. After this we create a node that subscribes to the Image topic produced by the Turtlebot and use the image converted by "cv_bridge" to detect and track the person model if present in the image.
+
+Task 4: Control Node for Pursuit: To access the location of the robot model on the map, subscribe to the "/tb3_0/amcl_pose" topic. To send dynamic goals to move_base, publish the goals to "/tb3_0/move_base_simple/goal" which is of type "PoseStamped". To check the status of the goal without using actionlib, subscribe to "/tb3_0/move_base/result" of type "MoveBaseActionResult". 
+
+
+
